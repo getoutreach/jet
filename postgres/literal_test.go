@@ -59,12 +59,17 @@ func TestFloat(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
-	assertSerialize(t, String("Some text"), `$1`, "Some text")
+	assertSerialize(t, String("Some text"), `$1::text`, "Some text")
 }
 
 func TestBytea(t *testing.T) {
 	assertSerialize(t, Bytea("Some text"), `$1::bytea`, "Some text")
 	assertSerialize(t, Bytea([]byte("Some byte array")), `$1::bytea`, []byte("Some byte array"))
+}
+
+func TestJson(t *testing.T) {
+	assertSerialize(t, Json("{\"key\": \"value\"}"), `$1::json`, "{\"key\": \"value\"}")
+	assertSerialize(t, Json([]byte("{\"key\": \"value\"}")), `$1::json`, []byte("{\"key\": \"value\"}"))
 }
 
 func TestDate(t *testing.T) {
